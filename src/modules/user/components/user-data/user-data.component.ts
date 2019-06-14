@@ -14,7 +14,6 @@ export class UserDataComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.user)
   }
 
 }

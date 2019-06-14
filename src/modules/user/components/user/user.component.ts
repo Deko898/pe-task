@@ -20,7 +20,6 @@ export class UserComponent implements OnInit {
     const userId: number = this.activatedRoute.snapshot.params['id'];
     this.apiService.fetchUserById(userId).subscribe((user: UserInterface) => {
       this.user = user;
-      console.log(this.user)
     });
   }
 
