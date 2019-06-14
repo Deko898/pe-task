@@ -1,0 +1,10 @@
+.example-card
+{
+    display: inline-flex;
+}
+
+img
+{
+    width: inherit;
+    border-radius: 50%;
+}

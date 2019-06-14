@@ -2,46 +2,49 @@ import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
-import { UserInterface } from '../../../../interfaces';
-import { ApiService } from '../../../core/services';
+import { UserInterface, PaginationInterface } from '../../../../interfaces';
+import { PaginationApiService } from 'src/modules/core/services/pagination-api.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-users-list',
   templateUrl: './users-list.component.html',
-  styleUrls: ['./users-list.component.css']
+  styleUrls: ['./users-list.component.css'],
 })
-export class UsersListComponent implements OnInit {
+export class UsersListComponent implements OnInit
+{
 
   displayedColumns = ['first_name', 'last_name', 'email'];
-  userList: any[] = [];
-  pagesCount: number;
+  userList: UserInterface[] = [];
+  pagesCount$: Observable<PaginationInterface>;
 
   constructor(private activatedRoute: ActivatedRoute,
-              private router: Router) {
+    private paginatonService: PaginationApiService,
+    private router: Router)
+  {
   }
 
-  ngOnInit() {
+  ngOnInit()
+  {
     this.activatedRoute.data.pipe(
       map(data => data.users)
     )
-      .subscribe((users: UserInterface[]) => {
+      .subscribe((users: UserInterface[]) =>
+      {
         this.userList = users;
       });
 
-    this.activatedRoute.data.pipe(
-      map(data => data.paginationInfo)
-    )
-      .subscribe(paginationInfo => {
-        this.pagesCount = paginationInfo.total;
-      })
+    this.pagesCount$ = this.paginatonService.pagination;
   }
 
-  pageChanged(event: PageEvent): void {
+  pageChanged(event: PageEvent): void
+  {
     let page: number = event.pageIndex + 1;
     this.router.navigate(['./'], { queryParams: { page } });
   }
 
-  userSelected(user: UserInterface): void {
+  userSelected(user: UserInterface): void
+  {
     this.router.navigate(['./user', user.id]);
   }
 }

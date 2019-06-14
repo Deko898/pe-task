@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserInterface } from '../../../../interfaces';
-import { ApiService } from '../../../core/services';
+import { ApiService } from '../../../core/services/api.service';
 
 @Component({
   selector: 'app-user',
@@ -20,6 +20,7 @@ export class UserComponent implements OnInit {
     const userId: number = this.activatedRoute.snapshot.params['id'];
     this.apiService.fetchUserById(userId).subscribe((user: UserInterface) => {
       this.user = user;
+      console.log(this.user)
     });
   }
 

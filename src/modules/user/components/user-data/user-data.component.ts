@@ -11,11 +11,10 @@ export class UserDataComponent implements OnInit {
 
   @Input() user: UserInterface;
 
-  constructor(@Optional() private parent: UserComponent) { }
+  constructor() { }
 
   ngOnInit() {
-    console.log(this.parent);
-    this.parent.user = { ...this.user };
+    console.log(this.user)
   }
 
 }
